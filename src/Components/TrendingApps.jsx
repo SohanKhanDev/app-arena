@@ -13,14 +13,30 @@ const TrendingApps = () => {
   return (
     <div className="bg-[#f5f5f5]">
       {/* top */}
-      <div className="text-center pt-20 space-y-4">
-        <h1 className="font-bold text-5xl">Trending Apps</h1>
-        <p className="text-[#627382]">
+      <div className="text-center pt-10 md:pt-20 space-y-3 md:space-y-4 px-4">
+        <h1 className="font-bold text-3xl md:text-5xl">Trending Apps</h1>
+        <p className="text-[#627382] text-sm md:text-base max-w-xl mx-auto">
           Explore All Trending Apps on the Market developed by us
         </p>
       </div>
 
-      <div className="grid grid-cols-4 gap-8 px-20 py-10">
+      <div
+        className="
+          grid 
+          grid-cols-1 
+          sm:grid-cols-2 
+          md:grid-cols-3 
+          lg:grid-cols-4 
+          gap-6 
+          md:gap-8 
+          px-6 
+          sm:px-10 
+          md:px-16 
+          lg:px-20 
+          py-8 
+          md:py-10
+        "
+      >
         {trendingApp.map((application) => (
           <ApplicationCard key={application.id} application={application} />
         ))}
