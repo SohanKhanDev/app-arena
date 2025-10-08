@@ -1,1 +1,14 @@
+/* tailwild */
 @import "tailwindcss";
+
+/* daisy */
+@plugin "daisyui" {
+    themes: light --default, dark;
+}
+
+/* font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+.interFont {
+    font-family: "Inter", sans-serif;
+}
