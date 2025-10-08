@@ -1,13 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import useApplications from "../Hooks/useApplications";
+import ApplicationCard from "../Components/ApplicationCard";
+import { Link } from "react-router";
 
 const Applications = () => {
+  // get data
   const { applications } = useApplications();
 
+  // search funcility
+  const [search, setSearch] = useState("");
+
+  const modifySearchData = search.trim().toLocaleLowerCase();
+
+  const searchedData = modifySearchData
+    ? applications.filter((application) =>
+        application.title.toLocaleLowerCase().includes(modifySearchData)
+      )
+    : applications;
+
   return (
-    <div>
-      <h1>All Application</h1>
-      <h1>({applications.length}) Apps Found</h1>
+    <div className="bg-[#f5f5f5] interFont px-4 sm:px-6 md:px-10 lg:px-20 min-h-screen">
+      {/* top */}
+      <div className="text-center pt-10 md:pt-20 space-y-3 md:space-y-4 px-2 sm:px-4">
+        <h1 className="font-bold text-3xl md:text-5xl">Our All Applications</h1>
+        <p className="text-[#627382] text-sm md:text-base max-w-xl mx-auto">
+          Explore All Apps on the Market developed by us. We code for Millions
+        </p>
+      </div>
+
+      {/* search box */}
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-5 mt-6 sm:mt-10">
+        <div>
+          <h1 className="font-semibold text-lg sm:text-xl md:text-2xl text-center sm:text-left">
+            ({searchedData.length}) Apps Found
+          </h1>
+        </div>
+
+        <div className="w-full sm:w-auto">
+          <label className="input input-bordered flex items-center gap-2 w-full sm:w-[280px] md:w-[320px] rounded-md shadow-sm bg-white">
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              type="search"
+              placeholder="Search Application"
+            />
+          </label>
+        </div>
+      </div>
+
+      {/* application card */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 py-8 md:py-10">
+        {searchedData.map((application) => (
+          <ApplicationCard key={application.id} application={application} />
+        ))}
+      </div>
     </div>
   );
 };

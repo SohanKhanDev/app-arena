@@ -20,23 +20,7 @@ const TrendingApps = () => {
         </p>
       </div>
 
-      <div
-        className="
-          grid 
-          grid-cols-1 
-          sm:grid-cols-2 
-          md:grid-cols-3 
-          lg:grid-cols-4 
-          gap-6 
-          md:gap-8 
-          px-6 
-          sm:px-10 
-          md:px-16 
-          lg:px-20 
-          py-8 
-          md:py-10
-        "
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 px-6 sm:px-10 md:px-16 lg:px-20 py-8 md:py-10">
         {trendingApp.map((application) => (
           <ApplicationCard key={application.id} application={application} />
         ))}
