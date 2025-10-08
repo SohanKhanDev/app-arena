@@ -5,7 +5,7 @@ import { Link } from "react-router";
 
 const Applications = () => {
   // get data
-  const { applications } = useApplications();
+  const { applications, loading, error } = useApplications();
 
   // search funcility
   const [search, setSearch] = useState("");

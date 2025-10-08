@@ -1,14 +1,15 @@
 import React from "react";
 import download from "../assets/icon-downloads.png";
 import rating from "../assets/icon-ratings.png";
+import { Link } from "react-router";
 
 const ApplicationCard = ({ application }) => {
-  const { image, title, ratingAvg, downloads } = application;
+  const { image, title, ratingAvg, downloads, id } = application;
 
   return (
-    <div
-      className="p-4 sm:p-5 md:p-6 interFont space-y-3 sm:space-y-4  bg-white rounded-xl shadow-sm hover:shadow-md transition duration-300 flex flex-col items-center w-full
-      "
+    <Link
+      to={`/application/${id}`}
+      className="p-4 sm:p-5 md:p-6 interFont space-y-3 sm:space-y-4  bg-white rounded-xl shadow-sm hover:shadow-md transition duration-300 flex flex-col items-center w-full"
     >
       <figure className="w-full flex justify-center">
         <img
@@ -30,7 +31,7 @@ const ApplicationCard = ({ application }) => {
           <span className="font-medium text-[#FF8811]">{ratingAvg}</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
