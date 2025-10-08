@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../assets/logo.png";
 import git from "../assets/git.png";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 
 const Navbar = () => {
   return (
@@ -32,13 +32,13 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <Link to={"/"}>Home</Link>
+                <NavLink to={"/"}>Home</NavLink>
               </li>
               <li>
-                <Link to={"/applications"}>Apps</Link>
+                <NavLink to={"/applications"}>Apps</NavLink>
               </li>
               <li>
-                <Link to={"/installedApp"}>Installation</Link>
+                <NavLink to={"/installedApp"}>Installation</NavLink>
               </li>
             </ul>
           </div>
@@ -55,13 +55,13 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex font-medium text-base">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <Link to={"/"}>Home</Link>
+              <NavLink to={"/"}>Home</NavLink>
             </li>
             <li>
-              <Link to={"/applications"}>Apps</Link>
+              <NavLink to={"/applications"}>Apps</NavLink>
             </li>
             <li>
-              <Link to={"/installedApp"}>Installation</Link>
+              <NavLink to={"/installedApp"}>Installation</NavLink>
             </li>
           </ul>
         </div>
