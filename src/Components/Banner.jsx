@@ -6,8 +6,8 @@ import hero from "../assets/hero.png";
 
 const Banner = () => {
   return (
-    <div>
-      <section className="interFont flex flex-col items-center mt-20 px-4 sm:px-6 md:px-10 lg:px-20">
+    <div className="bg-[#f5f5f5]">
+      <section className="interFont flex flex-col items-center pt-42 px-4 sm:px-6 md:px-10 lg:px-20">
         <h1 className="font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-center">
           We Build <br />{" "}
           <span className="bg-gradient-to-br from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent">

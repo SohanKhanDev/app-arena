@@ -1,10 +1,12 @@
 import React from "react";
 import Banner from "../Components/Banner";
+import Statistics from "../Components/Statistics";
 
 const Home = () => {
   return (
     <div>
-      <Banner></Banner>
+      <Banner />
+      <Statistics />
     </div>
   );
 };
