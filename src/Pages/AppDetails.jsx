@@ -17,7 +17,9 @@ import {
 
 const AppDetails = () => {
   const { id } = useParams();
-  const { applications, loading, error } = useApplications();
+
+  // get data
+  const { applications, loading } = useApplications();
 
   if (loading) return <p className="text-center text-lg">Loading...</p>;
 
@@ -34,8 +36,27 @@ const AppDetails = () => {
     downloads,
   } = application;
 
+  // chart data get
   const data = application.ratings;
-  console.log(data);
+
+  // add to installed list
+  const handelAddToInstall = () => {
+    const existingList = JSON.parse(localStorage.getItem("installlist"));
+    console.log(existingList);
+
+    let updatedList = [];
+
+    if (existingList) {
+      // duplicate handel
+      const isDuplicate = existingList.some((app) => app.id == application.id);
+      if (isDuplicate) return alert("Dublicate");
+
+      updatedList = [...existingList, application];
+    } else {
+      updatedList.push(application);
+    }
+    localStorage.setItem("installlist", JSON.stringify(updatedList));
+  };
 
   return (
     <div className="interFont py-10 px-4 sm:px-6 md:px-10 lg:px-20 min-h-screen bg-[#f5f5f5]">
@@ -112,7 +133,10 @@ const AppDetails = () => {
 
           {/* btn */}
           <div>
-            <button className="btn bg-[#00D390] text-white px-3.5 py-3 sm:py-4 lg:py-5 rounded-lg text-sm sm:text-base font-semibold hover:bg-[#00b37a] transition-colors w-full sm:w-auto">
+            <button
+              onClick={handelAddToInstall}
+              className="btn bg-[#00D390] text-white px-3.5 py-3 sm:py-4 lg:py-5 rounded-lg text-sm sm:text-base font-semibold hover:bg-[#00b37a] transition-colors w-full sm:w-auto"
+            >
               Install Now {size}MB
             </button>
           </div>
