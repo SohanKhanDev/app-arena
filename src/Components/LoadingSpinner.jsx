@@ -1,9 +1,10 @@
 import React from "react";
+import { HashLoader } from "react-spinners";
 
 const LoadingSpinner = () => {
   return (
-    <div>
-      <h1></h1>
+    <div className=" min-h-screen flex items-center justify-center">
+      <HashLoader />
     </div>
   );
 };

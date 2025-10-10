@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import useApplications from "../Hooks/useApplications";
 import download from "../assets/icon-downloads.png";
 import rating from "../assets/icon-ratings.png";
+import review from "../assets/icon-review.png";
 import {
   Bar,
   BarChart,
@@ -14,6 +15,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { toast, ToastContainer } from "react-toastify";
+import LoadingSpinner from "../Components/LoadingSpinner";
 
 const AppDetails = () => {
   const { id } = useParams();
@@ -21,7 +24,26 @@ const AppDetails = () => {
   // get data
   const { applications, loading } = useApplications();
 
-  if (loading) return <p className="text-center text-lg">Loading...</p>;
+  // install btn changes
+  const [isInstalled, setIsInstalled] = useState(false);
+
+  useEffect(() => {
+    if (!loading && applications.length > 0) {
+      const existingList = JSON.parse(localStorage.getItem("installlist"));
+
+      if (existingList) {
+        const isAppInstalled = existingList.some((app) => app.id == id);
+
+        if (isAppInstalled) {
+          setIsInstalled(true);
+        }
+      }
+    }
+  }, [loading, applications, id]);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   const application = applications.find((app) => app.id == id);
 
@@ -42,20 +64,29 @@ const AppDetails = () => {
   // add to installed list
   const handelAddToInstall = () => {
     const existingList = JSON.parse(localStorage.getItem("installlist"));
-    console.log(existingList);
 
     let updatedList = [];
 
     if (existingList) {
       // duplicate handel
       const isDuplicate = existingList.some((app) => app.id == application.id);
-      if (isDuplicate) return alert("Dublicate");
+      if (isDuplicate)
+        return toast.error("App is already installed!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
 
       updatedList = [...existingList, application];
     } else {
       updatedList.push(application);
     }
     localStorage.setItem("installlist", JSON.stringify(updatedList));
+    setIsInstalled(true);
+
+    toast.success(`${title} installed successfully!`, {
+      position: "top-right",
+      autoClose: 3000,
+    });
   };
 
   return (
@@ -63,7 +94,7 @@ const AppDetails = () => {
       {/* top section */}
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 border-b border-gray-300 pb-4">
         {/* left img */}
-        <div>
+        <div className="">
           <img
             src={image}
             alt={title}
@@ -118,7 +149,7 @@ const AppDetails = () => {
 
             <div className="text-center sm:text-left">
               <img
-                src={download}
+                src={review}
                 alt="Reviews"
                 className="mb-2 mx-auto sm:mx-0 w-8 h-8"
               />
@@ -135,9 +166,14 @@ const AppDetails = () => {
           <div>
             <button
               onClick={handelAddToInstall}
-              className="btn bg-[#00D390] text-white px-3.5 py-3 sm:py-4 lg:py-5 rounded-lg text-sm sm:text-base font-semibold hover:bg-[#00b37a] transition-colors w-full sm:w-auto"
+              disabled={isInstalled} // Disable button if installed
+              className={`btn px-3.5 py-3 sm:py-4 lg:py-5 rounded-lg text-sm sm:text-base font-semibold transition-colors w-full sm:w-auto ${
+                isInstalled
+                  ? "bg-gray-400 text-white cursor-not-allowed"
+                  : "bg-[#00D390] text-white hover:bg-[#00b37a]"
+              }`}
             >
-              Install Now {size}MB
+              {isInstalled ? `Installed ${size}MB` : `Install Now ${size}MB`}
             </button>
           </div>
         </div>
@@ -173,6 +209,8 @@ const AppDetails = () => {
           {description}
         </p>
       </div>
+
+      <ToastContainer />
     </div>
   );
 };

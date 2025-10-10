@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import ApplicationCard from "./ApplicationCard";
 import useApplications from "../Hooks/useApplications";
+import LoadingSpinner from "./LoadingSpinner";
+import ErrorPage from "../Pages/ErrorPage";
 
 const TrendingApps = () => {
   // data get
   const { applications, loading, error } = useApplications();
+
+  const [trendingLoading, setTrendingLoading] = useState(true);
+
+  useEffect(() => {
+    if (!loading) {
+      const timer = setTimeout(() => {
+        setTrendingLoading(false);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  if (error) {
+    return <ErrorPage />;
+  }
 
   // Trending Apps
   const trendingApp = applications.slice(0, 8);
@@ -20,11 +41,17 @@ const TrendingApps = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 px-6 sm:px-10 md:px-16 lg:px-20 py-8 md:py-10">
-        {trendingApp.map((application) => (
-          <ApplicationCard key={application.id} application={application} />
-        ))}
-      </div>
+      {trendingLoading ? (
+        <div className="min-h-[150px] flex items-center justify-center py-10">
+          <LoadingSpinner />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 px-6 sm:px-10 md:px-16 lg:px-20 py-8 md:py-10">
+          {trendingApp.map((application) => (
+            <ApplicationCard key={application.id} application={application} />
+          ))}
+        </div>
+      )}
 
       <div className="flex justify-center py-10">
         <Link

@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useApplications from "../Hooks/useApplications";
 import ApplicationCard from "../Components/ApplicationCard";
 import { Link } from "react-router";
+import AppNotFound from "../Components/AppNotFound";
+import LoadingSpinner from "../Components/LoadingSpinner";
+import ErrorPage from "./ErrorPage";
 
 const Applications = () => {
   // get data
@@ -10,6 +13,8 @@ const Applications = () => {
   // search funcility
   const [search, setSearch] = useState("");
 
+  const [searchLoading, setSearchLoading] = useState(false);
+
   const modifySearchData = search.trim().toLocaleLowerCase();
 
   const searchedData = modifySearchData
@@ -17,6 +22,35 @@ const Applications = () => {
         application.title.toLocaleLowerCase().includes(modifySearchData)
       )
     : applications;
+
+  // clear searchbox
+  const clearSerach = () => {
+    setSearch("");
+  };
+
+  useEffect(() => {
+    if (search.trim().length > 0) {
+      setSearchLoading(true);
+
+      const timer = setTimeout(() => {
+        setSearchLoading(false);
+      }, 500);
+
+      return () => clearTimeout(timer);
+    } else {
+      setSearchLoading(false);
+    }
+  }, [search]);
+
+  // loading
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  // error
+  if (error) {
+    return <ErrorPage />;
+  }
 
   return (
     <div className="bg-[#f5f5f5] interFont px-4 sm:px-6 md:px-10 lg:px-20 min-h-screen">
@@ -27,7 +61,6 @@ const Applications = () => {
           Explore All Apps on the Market developed by us. We code for Millions
         </p>
       </div>
-
       {/* search box */}
       <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-5 mt-6 sm:mt-10">
         <div>
@@ -49,11 +82,21 @@ const Applications = () => {
       </div>
 
       {/* application card */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 py-8 md:py-10">
-        {searchedData.map((application) => (
-          <ApplicationCard key={application.id} application={application} />
-        ))}
-      </div>
+      {searchLoading ? (
+        <div className="min-h-[100px] flex items-center justify-center py-10">
+          <LoadingSpinner />
+        </div>
+      ) : !searchedData.length ? (
+        <div>
+          <AppNotFound clearSerach={clearSerach}></AppNotFound>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 py-8 md:py-10">
+          {searchedData.map((application) => (
+            <ApplicationCard key={application.id} application={application} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

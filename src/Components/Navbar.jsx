@@ -4,9 +4,17 @@ import git from "../assets/git.png";
 import { Link, NavLink } from "react-router";
 
 const Navbar = () => {
+  const activeClasses =
+    "font-semibold text-[16px]  text-purple-600  underline underline-offset-5";
+
+  const defaultClasses = "font-semibold text-[16px] text-black ";
+
+  const getLinkClasses = ({ isActive }) =>
+    `${defaultClasses} ${isActive ? activeClasses : ""}`;
+
   return (
     <div>
-      <div className="navbar bg-base-100 shadow-sm px-4 sm:px-6 md:px-10 lg:px-20 interFont">
+      <div className="navbar bg-base-100 shadow-sm px-4 sm:px-6 md:px-10 lg:px-20 interFont ">
         {/* nav start */}
         <div className="navbar-start">
           <div className="dropdown">
@@ -32,13 +40,19 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <NavLink to={"/"}>Home</NavLink>
+                <NavLink className={getLinkClasses} to={"/"}>
+                  Home
+                </NavLink>
               </li>
               <li>
-                <NavLink to={"/applications"}>Apps</NavLink>
+                <NavLink className={getLinkClasses} to={"/applications"}>
+                  Apps
+                </NavLink>
               </li>
               <li>
-                <NavLink to={"/installedApp"}>Installation</NavLink>
+                <NavLink className={getLinkClasses} to={"/installedApp"}>
+                  Installation
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -55,13 +69,19 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex font-medium text-base">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <NavLink to={"/"}>Home</NavLink>
+              <NavLink className={getLinkClasses} to={"/"}>
+                Home
+              </NavLink>
             </li>
             <li>
-              <NavLink to={"/applications"}>Apps</NavLink>
+              <NavLink className={getLinkClasses} to={"/applications"}>
+                Apps
+              </NavLink>
             </li>
             <li>
-              <NavLink to={"/installedApp"}>Installation</NavLink>
+              <NavLink className={getLinkClasses} to={"/installedApp"}>
+                Installation
+              </NavLink>
             </li>
           </ul>
         </div>

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import InstalledAppCard from "../Components/InstalledAppCard";
+import NoAppInInstall from "../Components/NoAppInInstall";
+import { toast, ToastContainer } from "react-toastify";
 
 const InstalledApp = () => {
   const [installedApp, setInstalledApp] = useState([]);
@@ -37,7 +39,15 @@ const InstalledApp = () => {
     setInstalledApp(updatedList);
 
     localStorage.setItem("installlist", JSON.stringify(updatedList));
+    // alert("Uninstall");
+    toast.success(`Uninstalled successfully!`, {
+      position: "top-right",
+      autoClose: 3000,
+    });
   };
+
+  //empty list handel
+  if (!installedApp.length) return <NoAppInInstall></NoAppInInstall>;
 
   return (
     <div className="bg-[#f5f5f5] interFont px-4 sm:px-6 md:px-10 lg:px-20 xl:px-24 min-h-screen">
@@ -82,6 +92,7 @@ const InstalledApp = () => {
           />
         ))}
       </div>
+      <ToastContainer />
     </div>
   );
 };
