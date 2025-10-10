@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import InstalledAppCard from "../Components/InstalledAppCard";
 import NoAppInInstall from "../Components/NoAppInInstall";
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const InstalledApp = () => {
   const [installedApp, setInstalledApp] = useState([]);
@@ -33,10 +34,14 @@ const InstalledApp = () => {
   const handelRemoveFromInstall = (id) => {
     const existingList = JSON.parse(localStorage.getItem("installlist"));
 
-    let updatedList = existingList.filter((app) => app.id != id);
+    const listToFilter = existingList || [];
+
+    let updatedList = listToFilter.filter((app) => app.id != id);
 
     // for ui update
-    setInstalledApp(updatedList);
+    setTimeout(() => {
+      setInstalledApp(updatedList);
+    }, 1000);
 
     localStorage.setItem("installlist", JSON.stringify(updatedList));
     // alert("Uninstall");

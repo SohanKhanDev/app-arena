@@ -17,6 +17,7 @@ import {
 } from "recharts";
 import { toast, ToastContainer } from "react-toastify";
 import LoadingSpinner from "../Components/LoadingSpinner";
+import AppNotFound from "../Components/AppNotFound";
 
 const AppDetails = () => {
   const { id } = useParams();
@@ -46,6 +47,11 @@ const AppDetails = () => {
   }
 
   const application = applications.find((app) => app.id == id);
+
+  // for invalid link
+  if (!application) {
+    return <AppNotFound />;
+  }
 
   const {
     image,
