@@ -1,9 +1,3 @@
-I'm happy to give you the full, polished README content for your **APPARENA** project, structured to match the high-quality format you used for Ankur.
-
-This version focuses on the strength of your frontend skills, data visualization, and modern package usage.
-
------
-
 ## 🌐 APPARENA: Application Showcase Platform
 
 ### 🔗 Live Demo
